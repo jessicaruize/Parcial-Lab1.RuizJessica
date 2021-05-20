@@ -16,7 +16,7 @@
 
 //*** DEFINE
 
-#define MAX_CHARS_CADENAS 30
+#define MAX_CHARS_CADENAS 25
 #define LIBRE 0
 #define OCUPADO 1
 #define BAJA -1

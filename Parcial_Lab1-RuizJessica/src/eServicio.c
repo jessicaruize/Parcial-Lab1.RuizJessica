@@ -244,6 +244,8 @@ int eServicio_buscarIdMaximo(eServicio aServicio[], int tamServicio, int* idMaxi
 	return retorno;
 }
 
+
+//ABM
 /**
  * @fn int eServicio_cargarDatos(eServicio*)
  * @brief funcion que pide los datos a cargar y los verifica.
@@ -265,7 +267,6 @@ int eServicio_cargarDatos(eServicio* pServicio)
 	}
 	return retorno;
 }
-
 /**
  * @fn int eServicio_modificarUno(eServicio*)
  * @brief funcion que modifica los datos requeridos.
@@ -280,7 +281,7 @@ int eServicio_modificarUno(eServicio* pServicio)
 	do
 	{
 		printf("\n\n\tMODIFICAR: \n\n1_Descripción.\n2_Precio.\n3_Modificación terminada.");
-		if(!utn_pedirEntero(&respuesta, "\n\nIngrese la opción que desea realizar: ", "\nError", 1, 6, 2, 1))
+		if(!utn_pedirEntero(&respuesta, "\n\nIngrese la opción que desea realizar: ", "\nError", 1, 3, 2, 1))
 		{
 			switch(respuesta)
 
@@ -311,7 +312,6 @@ int eServicio_modificarUno(eServicio* pServicio)
 
 	return retorno;
 }
-
 /**
  * @fn int eServicio_alta(eServicio[], int)
  * @brief funcion que verifica si el usuario desea guardar el alta y en ese caso crea el
@@ -417,7 +417,6 @@ int eServicio_baja(eServicio aServicio[], int tamServicio)
 
 	return retorno;
 }
-
 /**
  * @fn int eServicio_Modificacion(eServicio[], int)
  * @brief funcion en la que corrobora si el ID ingresado es corecto para luego realizar la

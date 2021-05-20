@@ -17,7 +17,7 @@
 
 #define TAM_TRABAJO 15
 #define TAM_SERVICIO 10
-#define TAM_ESTRUCTURA3 8
+#define TAM_BICICLETA 20
 
 int main(void)
 {
@@ -25,6 +25,9 @@ int main(void)
 	int opcion;
 	int bufferRespuestas;
 	float totalPesos;
+	eBicicleta Bicicleta[TAM_BICICLETA];
+	eBicicleta_inicializar(Bicicleta, TAM_BICICLETA);
+	eBicicleta_cargaAutomaticaBicicleta(Bicicleta, 5);
 	eTrabajo Trabajo[TAM_TRABAJO];
 	eTrabajo_inicializar(Trabajo, TAM_TRABAJO);
 	eTrabajo_cargaAutomaticaTrabajo(Trabajo, 5);
@@ -35,7 +38,7 @@ int main(void)
 	do {
 		if(!eConjuntos_menu(&opcion))
 		{
-			printf("\nOpción elegida: %d\n\n", opcion);
+			printf("\nOpción elegida: %d\n\n", opcion);//---------------------------------------------
 			switch (opcion)
 			{
 				case 0:
@@ -47,7 +50,7 @@ int main(void)
 					break;
 				case 1:
 					//ALTA
-					bufferRespuestas = eConjuntos_alta(Trabajo, TAM_TRABAJO, Servicio, TAM_SERVICIO);
+					bufferRespuestas = eConjuntos_alta(Trabajo, TAM_TRABAJO, Servicio, TAM_SERVICIO, Bicicleta, TAM_BICICLETA);
 					switch (bufferRespuestas)
 					{
 						case -3:
@@ -68,7 +71,7 @@ int main(void)
 					}
 				break;
 				case 2: //BAJA
-					bufferRespuestas = eConjuntos_baja(Trabajo, TAM_TRABAJO, Servicio, TAM_SERVICIO);
+					bufferRespuestas = eConjuntos_baja(Trabajo, TAM_TRABAJO, Servicio, TAM_SERVICIO, Bicicleta, TAM_BICICLETA);
 					switch (bufferRespuestas)
 					{
 						case -3:
@@ -97,7 +100,7 @@ int main(void)
 
 				break;
 				case 3: //MODIFICACION
-					opcion = eConjuntos_modificacion(Trabajo, TAM_TRABAJO, Servicio, TAM_SERVICIO);
+					opcion = eConjuntos_modificacion(Trabajo, TAM_TRABAJO, Servicio, TAM_SERVICIO, Bicicleta, TAM_BICICLETA);
 					switch(opcion)
 					{
 						case -4:
@@ -121,12 +124,19 @@ int main(void)
 					}
 				break;
 				case 4: //trabajos ordenados por año.
-					if(!eTrabajo_SortAnio(Trabajo, TAM_TRABAJO))
+					if(!eConjuntos_SortAnio(Trabajo, TAM_TRABAJO, Bicicleta, TAM_BICICLETA))
 					{
-						eConjuntos_mostrarTodos(Trabajo, TAM_TRABAJO, Servicio, TAM_SERVICIO);
+						if(!eConjuntos_mostrarTodos(Trabajo, TAM_TRABAJO, Servicio, TAM_SERVICIO, Bicicleta, TAM_BICICLETA))
+						{
+							puts("");
+						}
+						else
+						{
+							puts("No hay trabajos para mostrar.");
+						}
 					}else
 					{
-						puts("No hay trabajos para mostrar.");
+						puts("Error.");
 					}
 				break;
 				case 5://Lista de Servicios.
@@ -144,6 +154,30 @@ int main(void)
 					{
 						puts("No hay trabajos.");
 					}
+				break;//Listado de todos los trabajos ordenados por marca de la bicicleta.
+				case 7:
+					if(!eConjuntos_OrdenMarca(Trabajo, TAM_TRABAJO, Bicicleta, TAM_BICICLETA))
+					{
+						if(!eConjuntos_mostrarTodos(Trabajo, TAM_TRABAJO, Servicio, TAM_SERVICIO, Bicicleta, TAM_BICICLETA))
+						{
+							puts("");
+						}
+						else
+						{
+							puts("No hay trabajos para mostrar.");
+						}
+					}else
+					{
+						puts("Error.");
+					}
+				break;
+				case 8://El o los servicios con más trabajos realizados.
+					eConjuntos_ServiciosConMasTrabajos(Servicio, TAM_SERVICIO, Trabajo, TAM_TRABAJO);
+				break;
+				case 9://Listado de servicios con los datos de las bicicletas que se lo realizaron.
+
+				break;
+				case 10://La cantidad de biciletas de color Rojo que realizaron un servicio  elegido por el usuario.
 				break;
 			}
 		}

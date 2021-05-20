@@ -17,7 +17,7 @@
 
 //*** DEFINE
 
-#define MAX_CHARS_CADENAS 30
+#define MAX_CHARS_CADENAS 25
 #define LIBRE 0
 #define OCUPADO 1
 #define BAJA -1
@@ -35,8 +35,7 @@ typedef struct
 typedef struct
 {
 	int idTrabajo;
-	char marcaBicicleta[MAX_CHARS_CADENAS];
-	int rodadoBicicleta;
+	int idBicicleta;
 	int idServicio;
 	eFecha fecha;
 	int isEmpty;
@@ -55,15 +54,7 @@ int eTrabajo_mostrarTodos(eTrabajo aTrabajo[], int tamTrabajo);
 int eTrabajo_mostrarDadosDeBaja(eTrabajo aTrabajo[], int tamTrabajo);
 int eTrabajo_buscarIdMaximo(eTrabajo aTrabajo[], int tamTrabajo, int* idMaximo);
 
-
-
-/** SORT */
-//CRITERIO -> -1 = MENOR A MAYOR
-//CRITERIO ->  1 = MAYOR A MENOR
-int eTrabajo_SortAnio(eTrabajo aTrabajo[], int tamTrabajo);
-int eTrabajo_SortAnioSolo(eTrabajo aTrabajo[], int indiceTrabajo1, int indiceTrabajo2, eTrabajo *aux);
-void eTrabajo_SortMarca(eTrabajo aTrabajo[], int indiceTrabajo1, int indiceTrabajo2, eTrabajo* aux);
-
+//BORRAR--------------------------------------------------------------------------------------------------------------------------------
 //ABM
 int eTrabajo_cargarDatos(eTrabajo* paTrabajo);
 int eTrabajo_modificarUno(eTrabajo* Trabajo);
@@ -74,16 +65,6 @@ int eTrabajo_modificacion(eTrabajo aTrabajo[], int tamTrabajo);
 
 //FUNCIONES FECHA
 eFecha eTrabajo_pedirFecha(char* mensaje, char* mensajeError, int reintentos, int minAnio, int maxAnio);
-
-
-//FUNCIONES
-/*
- * permite abstraer codigo
- * se puede reutilizar
- * mas facil de mantener
- * recibe (argumentos/parametros)variables locales.
- *
- * */
 
 
 

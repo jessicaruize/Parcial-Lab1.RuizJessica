@@ -18,8 +18,7 @@ static int Trabajo_idIncremental =  5;
 void eTrabajo_cargaAutomaticaTrabajo(eTrabajo aTrabajo[], int cantidadTrabajo)
 {
 	int id []= {1,2,3,4,5};
-	char marcaBicicleta[][30]={"akd", "bk", "dp", "jl", "ik"};
-	int rodadoBicicleta []= {16,18,20,22,24};
+	int idBicicleta []= {28,25,27,29,26};
 	int idServicio []= {20001,20004,20002,20003,20001};
 	eFecha aFecha []= {{2,5,2020}, {5,4,2019}, {22,6,2020}, {15,2,2019}, {4,9,2015}};
 
@@ -29,8 +28,7 @@ void eTrabajo_cargaAutomaticaTrabajo(eTrabajo aTrabajo[], int cantidadTrabajo)
 		for(i=0; i<cantidadTrabajo; i++)
 		{
 			aTrabajo[i].idTrabajo = id[i];
-			strcpy(aTrabajo[i].marcaBicicleta , marcaBicicleta[i]);
-			aTrabajo[i].rodadoBicicleta = rodadoBicicleta[i];
+			aTrabajo[i].idBicicleta = idBicicleta[i];
 			aTrabajo[i].idServicio = idServicio[i];
 			aTrabajo[i].fecha = aFecha[i];
 			aTrabajo[i].isEmpty = OCUPADO;
@@ -144,13 +142,12 @@ int eTrabajo_mostrarUno(eTrabajo* pTrabajo)
 	if(pTrabajo != NULL)
 	{
 		retorno = 0; //bien.
-		printf("ID trabajo: %-4d \t Marca de la bicicleta: %-15s \t Rodado de la bicicleta: %-4d \t ID servicio: %-4d \t Fecha: %d/%d/%d\n", pTrabajo->idTrabajo,
-																								   	   	   	  	  	  	  	  	   pTrabajo->marcaBicicleta,
-																																   pTrabajo->rodadoBicicleta,
-																																   pTrabajo->idServicio,
-																																   pTrabajo->fecha.dia,
-																																   pTrabajo->fecha.mes,
-																																   pTrabajo->fecha.anio);
+		printf("ID trabajo: %-4d \t ID bicicleta %-4d \t ID servicio: %-4d \t Fecha: %d/%d/%d\n", pTrabajo->idTrabajo,
+																								  pTrabajo->idBicicleta,
+																								  pTrabajo->idServicio,
+																								  pTrabajo->fecha.dia,
+																								  pTrabajo->fecha.mes,
+																								  pTrabajo->fecha.anio);
 	}
 	return retorno;
 }
@@ -251,82 +248,6 @@ int eTrabajo_buscarIdMaximo(eTrabajo aTrabajo[], int tamTrabajo, int* idMaximo)
 		}
 	}
 	return retorno;
-}
-
-
-/**
- * @fn int eTrabajo_SortAnio(eTrabajo[], int)
- * @brief  funcion que ordena por año de menor a mayor y en caso de tener el mismo año ordena por marca.
- * @param aTrabajo array a ser ordenado
- * @param tamTrabajo tamaño del array aTrabajo.
- * @return retorna -1 en caso de error y 0 si se ordeno correctamente.
- */
-int eTrabajo_SortAnio(eTrabajo aTrabajo[], int tamTrabajo)
-{
-	int retorno = -1;
-	int i;
-	int j;
-	eTrabajo aux;
-	if(aTrabajo != NULL && tamTrabajo > 0)
-	{
-		for (i = 0; i < tamTrabajo - 1; i++)
-			{
-				for (j = i + 1; j < tamTrabajo; j++)
-				{
-					eTrabajo_SortAnioSolo(aTrabajo, i, j, &aux);
-					eTrabajo_SortMarca(aTrabajo, i, j, &aux);
-					retorno = 0;
-
-				}
-			}
-	}
-
-	return retorno;
-}
-
-/**
- * @fn int eTrabajo_SortAnioSolo(eTrabajo[], int, int, eTrabajo*)
- * @brief funcion que va a ordenar los años de mayor a menor.
- * @param aTrabajo array a ser ordenado.
- * @param indiceTrabajo1 indice recibito por valor que va a ser usado en el array aTrabajo para ordenar
- * @param indiceTrabajo2 indice recibito por valor que va a ser usado en el array aTrabajo para ordenar
- * @param aux puntero auxiliar para poder realizar el cambio.
- * @return
- */
-int eTrabajo_SortAnioSolo(eTrabajo aTrabajo[], int indiceTrabajo1, int indiceTrabajo2, eTrabajo *aux)
-{
-	int retorno = -1;
-	if ((aTrabajo != NULL && indiceTrabajo1 > -1 && indiceTrabajo2 > -1 && aux != NULL) &&
-		 (aTrabajo[indiceTrabajo1].isEmpty == OCUPADO && aTrabajo[indiceTrabajo2].isEmpty == OCUPADO) &&
-		(aTrabajo[indiceTrabajo1].fecha.anio > aTrabajo[indiceTrabajo2].fecha.anio))
-		{
-			*aux = aTrabajo[indiceTrabajo1];
-			aTrabajo[indiceTrabajo1] = aTrabajo[indiceTrabajo2];
-			aTrabajo[indiceTrabajo2] = *aux;
-			retorno = 0;
-		}
-	return retorno;
-}
-
-/**
- * @fn void eTrabajo_SortMarca(eTrabajo[], int, int, eTrabajo*)
- * @brief  funcion que va a ordenar alfabeticamente las marcas que tengas el mismo año de trabajo.
- * @param aTrabajo array en el que se va a comparar los años y las marcas con los indices correspondientes.
- * @param indiceTrabajo1 indice que sera aplicado en el array aTrabajo para comparar.
- * @param indiceTrabajo2 indice que sera aplicado en el array aTrabajo para comparar.
- * @param aux puntero auxiliar para poder realizar el cambio.
- */
-void eTrabajo_SortMarca(eTrabajo aTrabajo[], int indiceTrabajo1, int indiceTrabajo2, eTrabajo* aux)
-{
-	if ((aTrabajo != NULL && indiceTrabajo1 > -1 && indiceTrabajo2 > -1 && aux != NULL) &&
-		(aTrabajo[indiceTrabajo1].isEmpty == OCUPADO && aTrabajo[indiceTrabajo2].isEmpty == OCUPADO) &&
-	    (aTrabajo[indiceTrabajo1].fecha.anio == aTrabajo[indiceTrabajo2].fecha.anio) &&
-		(strcmp(aTrabajo[indiceTrabajo1].marcaBicicleta, aTrabajo[indiceTrabajo2].marcaBicicleta)>0))
-			{
-				*aux = aTrabajo[indiceTrabajo1];
-				aTrabajo[indiceTrabajo1] = aTrabajo[indiceTrabajo2];
-				aTrabajo[indiceTrabajo2] = *aux;
-			}
 }
 
 /**
